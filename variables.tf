@@ -1,10 +1,10 @@
 # main creds for AWS connection
 variable "aws_access_key_id" {
-  description = "AWS access key"
+  description = "AKIAUHGSF3INKPVQC4SI"
 }
 
 variable "aws_secret_access_key" {
-  description = "AWS secret access key"
+  description = "FxXrLgLUj5uggjL6zUnFCfrNGmZAF/bRGwxz6+an"
 }
 
 variable "availability_zone" {
@@ -16,29 +16,29 @@ variable "availability_zone" {
 
 # this is a keyName for key pairs
 variable "aws_key_name" {
-  description = "Key Pair Name used to provision to the box"
+  description = "krishna1.pem"
 }
 
 variable "inst_ami" {
-  description = "Amazon Machine Image for the Instance"
+  description = "ami-0520e698dd500b1d1"
 }
 
 variable "inst_type" {
-  description = "type of instances to provision"
+  description = "t2.micro"
 }
 
 variable "vpc_public_sg_id" {
-  description = "VPC public security group"
+  description = "sg-077e143ceb5d7a64f"
 }
 
 variable "vpc_public_sn_id" {
-  description = "VPC public subnet"
+  description = "subnet-6518ed0e"
 }
 
 variable "vpc_region" {
-  description = "VPC region"
+  description = "US East (Ohio)"
 }
 
 variable "public_ssh_key" {
-  description = "Public SSH key value"
+  description = "ssh -i "cg1.pem" ec2-user@ec2-13-58-62-189.us-east-2.compute.amazonaws.com"
 }
