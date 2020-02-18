@@ -1,6 +1,6 @@
  provider "aws" {
-  access_key  = "AKIAUHGSF3INKD77UGFJ"
-  secret_key  = "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"
+  access_key  = "${var.aws_access_key_id}"
+  secret_key  = "${var.aws_secret_access_key}"
   region      = "us-east-2"
 }
 
@@ -9,7 +9,7 @@ resource "aws_instance" "ansible" {
                ami = "ami-0520e698dd500b1d1"
                instance_type = "t2.micro"
                key_name = "krishna"
-               security_groups = ["sshonly"]
+               security_groups = ["sg-0f51a292dbe8004ad"]
  
  
               connection {
@@ -19,8 +19,9 @@ resource "aws_instance" "ansible" {
                private_key = "${file("/home/ec2-user/.ssh)}"
 
               provisioner "remote-exec" {
-               inline = [ "sudo dnf install python3 python3-pip -y",
-                           "pip3 install ansible --user", ]
+               inline = [ "sudo yum -y update",
+                           "sudo yum -y install epel-repo",
+                            "sudo yum -y install ansible",]
              }
            }
          }
