@@ -14,7 +14,7 @@ resource "aws_instance" "ansible" {
  
               connection {
                type = "ssh"
-               user = "ec2-user"
+               user = "root"
                host = "${aws_instance.ansible.public_ip}"
                private_key = "${file("/home/ec2-user/.ssh)}"
 
