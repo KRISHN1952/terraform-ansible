@@ -1,35 +1,30 @@
-# Setup our aws provider
-provider "aws" {
+ provider "aws" {
   access_key  = "${var.aws_access_key_id}"
   secret_key  = "${var.aws_secret_access_key}"
-  region      = "${var.vpc_region}"
+  region      = "us-east-2"
 }
 
-# SSH key pair for accessing ec2 machine
-resource "aws_key_pair" "sshKeyPair" {
-  key_name   = "${var.aws_key_name}"
-  public_key = "${var.public_ssh_key}"
-}
 
-# instances
-resource "aws_instance" "ec2Instances" {
-  count = 1
-  ami = "${var.inst_ami}"
-  availability_zone = "${lookup(var.availability_zone, var.vpc_region)}"
-  instance_type = "${var.inst_type}"
-  key_name = "${aws_key_pair.sshKeyPair.key_name}"
-  subnet_id = "${var.vpc_public_sn_id}"
-  associate_public_ip_address = true
-  source_dest_check = false
+  resource "aws_instance" "ansible" {
+               ami = "ami-0520e698dd500b1d1"
+               instance_type = "t2.micro"
+               security_groups = ["launch-wizard-1"]
 
-  security_groups = [
-    "${var.vpc_public_sg_id}"]
+connection {
+               type = "ssh"
+               user = "root"
+               password = ""
+               host = "${aws_instance.ansible.public_ip}"
+               private_key = "${file("./krishna321.pem")}"
+               }
 
-  tags = {
-    Name = "ec2Instances${count.index}"
-  }
-}
+provisioner "local-exec" {
+               command = "echo ${aws_instance.ansible.public_ip} >> public_ip.txt"
+               }
+provisioner "remote-exec" {
+               inline = [ "sudo yum -y update",
+                          "sudo yum -y install epel-repo",
+                          "sudo yum -y install ansible",]
+                          }
 
-output "ec2_ins_0_ip" {
-  value = "${aws_instance.ec2Instances.0.public_ip}"
-}
+           }
