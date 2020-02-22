@@ -9,6 +9,7 @@
                ami = "ami-0520e698dd500b1d1"
                instance_type = "t2.micro"
                security_groups = ["launch-wizard-1"]
+               key_name = "krishna321"
 
 connection {
                type = "ssh"
@@ -26,8 +27,7 @@ provisioner "remote-exec" {
                           "alternatives --set python /usr/bin/python3",
                           "yum -y install python3-pip",
                           "useradd krishna",
-                          "passwd krishna",
-                          "echo "krishna ALL=(ALL) NOPASSWD: ALL" >> /etc/sudoers",]
+                          "passwd krishna",]                          ]
                  }
 
            }
