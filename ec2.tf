@@ -12,9 +12,8 @@
 
 connection {
                type = "ssh"
-               user = "root"
-               password = ""
-               host = "${aws_instance.ansible.public_ip}"
+               user = "ec2-user"
+               host = aws_instance.ansible.public_ip
                private_key = "${file("./krishna321.pem")}"
                }
 
